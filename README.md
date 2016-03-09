@@ -37,16 +37,25 @@ export { __ACTIVE_CONFIG__ as default };
 ### webpack.config.js
 
 ```javascript
+var defines = {
+  '__API_ROOT__': 'document.location.origin + "/api"',
+  '__SOCKET_ROOT__': 'document.location.origin',
+  '__DEBUG__': JSON.stringify( JSON.parse( process.env.BUILD_DEBUG || 'false' ) ),
+  '__ACTIVE_CONFIG__': 'LiveUI'
+};
+
 var babelConfig = JSON.parse( fs.readFileSync('.babelrc') );
 babelConfig.plugins.push( [ "define", defines ] );
 
 ...
-
-module: {
-  loaders: [
-    ...
-    { test: /\.js?$/, loader: 'babel', exclude: /node_modules|bower_components/, query: babelConfig },
-    ...
-  ]
+module.exports = {
+  ...
+  module: {
+    loaders: [
+      ...
+      { test: /\.js?$/, loader: 'babel', exclude: /node_modules|bower_components/, query: babelConfig },
+      ...
+    ]
+  }
 };
 ```
