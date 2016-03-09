@@ -1,0 +1,14 @@
+{
+  "name": "babel-plugin-define",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-template": "^6.6.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yury Michurin <yury@nix.co.il>",
+  "license": "ISC"
+}
