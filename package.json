@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-define",
   "version": "1.0.0",
-  "description": "",
+  "description": "Babel plugin for pre-processing defines",
   "main": "index.js",
   "dependencies": {
     "babel-template": "^6.6.5"
@@ -9,6 +9,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Yury Michurin <yury@nix.co.il>",
-  "license": "ISC"
+  "author": {
+	"name": "Yury Michurin",
+	"email": "yury@nix.co.il",
+	"url": "https://github.com/yurynix"
+  },
+  "homepage": "https://github.com/yurynix/babel-plugin-define",
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/yurynix/babel-plugin-define.git"
+   },
+   "license": "MIT"
 }
