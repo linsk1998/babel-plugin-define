@@ -4,7 +4,7 @@ const { transform } = require("@babel/core");
 const plugin = require("../index");
 
 function test(title, options) {
-	it(title, function () {
+	it(title, function() {
 		const file = 'tests/case/' + title;
 		const fileIn = file + '.js';
 		const fileOut = file + '.out.js';
@@ -20,7 +20,7 @@ function test(title, options) {
 	});
 }
 
-describe('babel-plugin-transform-private-to-hash', function () {
+describe('babel-plugin-define', function() {
 	test('identifier', {
 		'__API_ROOT__': 'document.location.origin + "/api"',
 		'__SOCKET_ROOT__': 'document.location.origin',
@@ -32,5 +32,17 @@ describe('babel-plugin-transform-private-to-hash', function () {
 		'__SOCKET_ROOT__': 'document.location.origin',
 		'__DEBUG__': JSON.stringify(JSON.parse(process.env.BUILD_DEBUG || 'false')),
 		'__ACTIVE_CONFIG__': 'LiveUI'
+	});
+	test('property', {
+		'process.env.NODE_ENV': '"development"',
+		'a': 'foo',
+		'import.meta.env.MODE': '"staging"'
+	});
+	test('typeof', {
+		'process.env.NODE_ENV': '"development"',
+		'typeof process': '"undefined"',
+		'typeof global': '"undefined"',
+		'typeof a.b': '"undefined"',
+		'typeof import.meta.env.MODE': '"undefined"'
 	});
 });
