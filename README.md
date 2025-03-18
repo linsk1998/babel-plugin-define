@@ -1,6 +1,6 @@
 # Define constants to replace with expression
 
-This plugin allows replace ``identifier`` with other expression or literal, for example
+This plugin allows replace `identifier` `member expression` `typeof unary expression` with other expression or literal, for example
 when we want to specify in webpack's config different parameters for our code.
 
 Consider the following example, in which we would like to use different
@@ -27,7 +27,11 @@ export { __ACTIVE_CONFIG__ as default };
         "__API_ROOT__": "document.location.origin + '/api'",
         "__SOCKET_ROOT__": "document.location.origin",
         "__DEBUG__": "false",
-        "__ACTIVE_CONFIG__": "LiveUI"
+        "__ACTIVE_CONFIG__": "LiveUI",
+        "process.env.NODE_ENV": "'development'",
+        "import.meta.env.MODE": "'staging'",
+        "typeof process": "'undefined'",
+        "typeof global": "'undefined'"
      } ]
 
    ]
@@ -41,7 +45,11 @@ var defines = {
   '__API_ROOT__': 'document.location.origin + "/api"',
   '__SOCKET_ROOT__': 'document.location.origin',
   '__DEBUG__': JSON.stringify( JSON.parse( process.env.BUILD_DEBUG || 'false' ) ),
-  '__ACTIVE_CONFIG__': 'LiveUI'
+  '__ACTIVE_CONFIG__': 'LiveUI',
+  'process.env.NODE_ENV': '"development"',
+  'import.meta.env.MODE': '"staging"',
+  'typeof process': '"undefined"',
+  'typeof global': '"undefined"'
 };
 
 var babelConfig = JSON.parse( fs.readFileSync('.babelrc') );

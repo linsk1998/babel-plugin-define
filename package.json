@@ -12,7 +12,8 @@
 		"mocha": "^8.0.1"
 	},
 	"scripts": {
-		"test": "mocha tests/**/*.test.js"
+		"test": "mocha tests/**/*.test.js",
+		"prepublishOnly": "npm test"
 	},
 	"author": {
 		"name": "Yury Michurin",
