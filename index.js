@@ -1,4 +1,5 @@
 var { expression } = require('@babel/template');
+var { declare } = require('@babel/helper-plugin-utils');
 
 function getAst(t, code) {
 	// we first try to see if it's a simple stringified value
@@ -12,14 +13,15 @@ function getAst(t, code) {
 	return ast;
 }
 
-module.exports = function (babel) {
-	var t = babel.types;
+module.exports = declare((api, options = {}) => {
+	api.assertVersion(7);
+	const t = api.types;
 
 	return {
 		visitor: {
 			Identifier: function (path, state) {
 				if (t.isIdentifier(path.node)) {
-					if (state.opts.hasOwnProperty(path.node.name)) {
+					if (options.hasOwnProperty(path.node.name)) {
 						var definition = state.opts[path.node.name];
 						path.replaceWith(getAst(t, definition));
 					}
@@ -27,4 +29,4 @@ module.exports = function (babel) {
 			}
 		}
 	};
-};
+});
