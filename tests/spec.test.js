@@ -27,4 +27,10 @@ describe('babel-plugin-transform-private-to-hash', function () {
 		'__DEBUG__': JSON.stringify(JSON.parse(process.env.BUILD_DEBUG || 'false')),
 		'__ACTIVE_CONFIG__': 'LiveUI'
 	});
+	test('scope', {
+		'__API_ROOT__': 'document.location.origin + "/api"',
+		'__SOCKET_ROOT__': 'document.location.origin',
+		'__DEBUG__': JSON.stringify(JSON.parse(process.env.BUILD_DEBUG || 'false')),
+		'__ACTIVE_CONFIG__': 'LiveUI'
+	});
 });

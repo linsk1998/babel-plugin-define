@@ -1,16 +1,8 @@
-var { expression } = require('@babel/template');
+var { parseExpression } = require('@babel/parser');
 var { declare } = require('@babel/helper-plugin-utils');
 
-function getAst(t, code) {
-	// we first try to see if it's a simple stringified value
-	try {
-		var val = JSON.parse(code);
-		return t.valueToNode(val);
-	} catch (e) { }
-
-	// if we reached here, it's probably not a simple value but some code
-	var ast = expression(code)();
-	return ast;
+function hasOwn(obj, key) {
+	return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 module.exports = declare((api, options = {}) => {
@@ -19,14 +11,21 @@ module.exports = declare((api, options = {}) => {
 
 	return {
 		visitor: {
-			Identifier: function (path, state) {
-				if (t.isIdentifier(path.node)) {
-					if (options.hasOwnProperty(path.node.name)) {
-						var definition = state.opts[path.node.name];
-						path.replaceWith(getAst(t, definition));
+			Identifier: function(path, state) {
+				if(path.isExpression()) {
+					const binding = path.scope.getBinding(path.node.name);
+					if(binding) {
+						return;
+					}
+					if(hasOwn(options, path.node.name)) {
+						var definition = options[path.node.name];
+						path.replaceWith(parseExpression(definition));
 					}
 				}
-			}
+			},
+			MemberExpression(path, state) {
+				path.skip();
+			},
 		}
 	};
 });
